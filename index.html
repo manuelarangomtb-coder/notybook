@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notybook - Noticias desde otro punto de vista</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <!-- Decorative Inca/Aztec pattern overlay -->
+    <div class="aztec-border-top"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo-area">
+                <div class="logo-glyph">&#9788;</div>
+                <div class="logo-text">
+                    <h1 class="site-title">NOTYBOOK</h1>
+                    <p class="site-subtitle">Noticias desde otro punto de vista</p>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="#noticias">Noticias</a>
+                <a href="#guerra">Conflictos</a>
+                <a href="#mercados">Mercados</a>
+                <a href="#asistente">Asistente IA</a>
+            </nav>
+            <div class="header-date" id="headerDate"></div>
+        </div>
+    </header>
+
+    <!-- Stock Ticker -->
+    <div class="ticker-bar">
+        <div class="ticker-track" id="tickerTrack">
+            <span class="ticker-loading">Cargando mercados...</span>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-pattern"></div>
+        <div class="hero-content">
+            <h2 class="hero-title">Informaci&oacute;n con <span class="highlight">conciencia</span></h2>
+            <p class="hero-desc">Noticias curadas con respeto por la vida, la dignidad humana y la verdad. Sin odio, sin morbo, sin manipulaci&oacute;n.</p>
+        </div>
+        <div class="inca-sun"></div>
+    </section>
+
+    <!-- AI Assistant Section -->
+    <section class="section section-assistant" id="asistente">
+        <div class="section-header">
+            <div class="glyph-decoration">&#10047;</div>
+            <h2 class="section-title">Asistente de Noticias IA</h2>
+            <div class="glyph-decoration">&#10047;</div>
+        </div>
+        <p class="section-desc">Escribe qu&eacute; noticias quieres conocer y nuestra IA te las buscar&aacute;.</p>
+        <div class="chat-container">
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-msg bot-msg">
+                    <div class="msg-avatar">&#9788;</div>
+                    <div class="msg-bubble">&iexcl;Hola! Soy el asistente de <strong>Notybook</strong>. Preg&uacute;ntame lo que quieras saber: noticias de hoy, qu&eacute; est&aacute; pasando en cualquier lugar del mundo, tendencias en redes sociales, deportes, pol&iacute;tica, econom&iacute;a, tecnolog&iacute;a... Te informo con hechos, sin opiniones. &iquest;Qu&eacute; quieres saber?</div>
+                </div>
+            </div>
+            <form class="chat-input-area" id="chatForm">
+                <input type="text" id="chatInput" class="chat-input" placeholder="Escribe qu&eacute; noticias quieres ver..." autocomplete="off">
+                <button type="submit" class="chat-send" id="chatSend">
+                    <span>&#10148;</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Main News Section -->
+    <section class="section" id="noticias">
+        <div class="section-header">
+            <div class="glyph-decoration">&#9883;</div>
+            <h2 class="section-title">Noticias Principales</h2>
+            <div class="glyph-decoration">&#9883;</div>
+        </div>
+        <div class="news-grid" id="mainNewsGrid">
+            <!-- Political News -->
+            <article class="news-card card-politica" id="newsPolitica">
+                <div class="card-tag">Pol&iacute;tica</div>
+                <div class="card-image skeleton-img"></div>
+                <div class="card-body">
+                    <h3 class="card-title skeleton-text"></h3>
+                    <p class="card-summary skeleton-text"></p>
+                    <div class="card-meta">
+                        <span class="card-source"></span>
+                        <span class="card-date"></span>
+                    </div>
+                </div>
+            </article>
+            <!-- Economic News -->
+            <article class="news-card card-economia" id="newsEconomia">
+                <div class="card-tag">Econom&iacute;a</div>
+                <div class="card-image skeleton-img"></div>
+                <div class="card-body">
+                    <h3 class="card-title skeleton-text"></h3>
+                    <p class="card-summary skeleton-text"></p>
+                    <div class="card-meta">
+                        <span class="card-source"></span>
+                        <span class="card-date"></span>
+                    </div>
+                </div>
+            </article>
+            <!-- Tech/AI News -->
+            <article class="news-card card-tech" id="newsTech">
+                <div class="card-tag">Tecnolog&iacute;a &amp; IA</div>
+                <div class="card-image skeleton-img"></div>
+                <div class="card-body">
+                    <h3 class="card-title skeleton-text"></h3>
+                    <p class="card-summary skeleton-text"></p>
+                    <div class="card-meta">
+                        <span class="card-source"></span>
+                        <span class="card-date"></span>
+                    </div>
+                </div>
+            </article>
+            <!-- Sports News -->
+            <article class="news-card card-deportes" id="newsDeportes">
+                <div class="card-tag">Deportes</div>
+                <div class="card-image skeleton-img"></div>
+                <div class="card-body">
+                    <h3 class="card-title skeleton-text"></h3>
+                    <p class="card-summary skeleton-text"></p>
+                    <div class="card-meta">
+                        <span class="card-source"></span>
+                        <span class="card-date"></span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- War/Conflict Section -->
+    <section class="section section-dark" id="guerra">
+        <div class="section-header">
+            <div class="glyph-decoration">&#9764;</div>
+            <h2 class="section-title">Conflicto en Medio Oriente</h2>
+            <div class="glyph-decoration">&#9764;</div>
+        </div>
+        <p class="section-disclaimer">Informamos con responsabilidad. No mostramos im&aacute;genes violentas ni contenido que promueva el odio.</p>
+        <div class="news-grid" id="warNewsGrid">
+            <article class="news-card card-war" id="war1">
+                <div class="card-tag tag-war">Conflicto</div>
+                <div class="card-image skeleton-img"></div>
+                <div class="card-body">
+                    <h3 class="card-title skeleton-text"></h3>
+                    <p class="card-summary skeleton-text"></p>
+                    <div class="card-meta">
+                        <span class="card-source"></span>
+                        <span class="card-date"></span>
+                    </div>
+                </div>
+            </article>
+            <article class="news-card card-war" id="war2">
+                <div class="card-tag tag-war">Conflicto</div>
+                <div class="card-image skeleton-img"></div>
+                <div class="card-body">
+                    <h3 class="card-title skeleton-text"></h3>
+                    <p class="card-summary skeleton-text"></p>
+                    <div class="card-meta">
+                        <span class="card-source"></span>
+                        <span class="card-date"></span>
+                    </div>
+                </div>
+            </article>
+            <article class="news-card card-war" id="war3">
+                <div class="card-tag tag-war">Conflicto</div>
+                <div class="card-image skeleton-img"></div>
+                <div class="card-body">
+                    <h3 class="card-title skeleton-text"></h3>
+                    <p class="card-summary skeleton-text"></p>
+                    <div class="card-meta">
+                        <span class="card-source"></span>
+                        <span class="card-date"></span>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Markets Dashboard Section -->
+    <section class="section section-dashboard" id="mercados">
+        <div class="section-header">
+            <div class="glyph-decoration">&#9830;</div>
+            <h2 class="section-title">Mercados Financieros</h2>
+            <div class="glyph-decoration">&#9830;</div>
+        </div>
+        <p class="section-desc">Las 7 Magn&iacute;ficas, MercadoLibre, Petr&oacute;leo y Oro &mdash; Dashboard en tiempo real</p>
+
+        <div class="dashboard-layout">
+            <!-- Main Chart Area -->
+            <div class="dash-main-chart">
+                <div class="dash-chart-header">
+                    <div class="dash-chart-info">
+                        <h3 class="dash-chart-symbol" id="mainChartSymbol">NVDA</h3>
+                        <span class="dash-chart-name" id="mainChartName">NVIDIA</span>
+                    </div>
+                    <div class="dash-chart-price-area">
+                        <span class="dash-chart-price" id="mainChartPrice">$142.30</span>
+                        <span class="dash-chart-change up" id="mainChartChange">&#9650; +5.20 (+3.79%)</span>
+                    </div>
+                    <div class="dash-chart-periods">
+                        <button class="period-btn active" data-period="1D">1D</button>
+                        <button class="period-btn" data-period="1W">1S</button>
+                        <button class="period-btn" data-period="1M">1M</button>
+                        <button class="period-btn" data-period="3M">3M</button>
+                        <button class="period-btn" data-period="1Y">1A</button>
+                    </div>
+                </div>
+                <div class="dash-chart-canvas-wrapper">
+                    <canvas id="mainChart"></canvas>
+                </div>
+                <div class="dash-chart-footer">
+                    <span>Vol: <strong id="mainChartVol">124.5M</strong></span>
+                    <span>Apertura: <strong id="mainChartOpen">$138.10</strong></span>
+                    <span>M&aacute;x: <strong id="mainChartHigh">$143.80</strong></span>
+                    <span>M&iacute;n: <strong id="mainChartLow">$137.50</strong></span>
+                </div>
+            </div>
+
+            <!-- Side Panel: Mini Cards with Sparklines -->
+            <div class="dash-side-panel">
+                <div class="dash-side-scroll" id="dashSideCards">
+                    <!-- Filled by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Row: Comparison Bar Chart + Pie/Doughnut -->
+        <div class="dashboard-bottom">
+            <div class="dash-bottom-card">
+                <h4 class="dash-card-title">Rendimiento del D&iacute;a (%)</h4>
+                <div class="dash-bottom-canvas-wrapper">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+            <div class="dash-bottom-card">
+                <h4 class="dash-card-title">Distribuci&oacute;n por Sector</h4>
+                <div class="dash-bottom-canvas-wrapper">
+                    <canvas id="sectorChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-logo">
+                <span class="footer-glyph">&#9788;</span>
+                <span>NOTYBOOK</span>
+            </div>
+            <p class="footer-text">Noticias con dignidad. Sin odio, sin morbo, sin manipulaci&oacute;n.</p>
+            <div class="footer-pattern"></div>
+            <p class="footer-copy">&copy; 2026 Notybook. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div class="aztec-border-bottom"></div>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
