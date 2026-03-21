@@ -3,8 +3,8 @@
    ============================================ */
 
 // ---- CONFIG ----
-// API key loaded from config.js (not tracked by git)
-const GROQ_API_KEY = NOTYBOOK_CONFIG.GROQ_API_KEY;
+// MVP - Free tier API key (exposed intentionally for public deployment)
+const GROQ_API_KEY = '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';
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
 // ---- CONTENT MODERATION ----
