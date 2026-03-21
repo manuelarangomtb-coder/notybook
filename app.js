@@ -1026,19 +1026,41 @@ chatForm.addEventListener('submit', async (e) => {
 
         removeTyping(typingEl);
 
-        const data = await response.json();
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            const status = response.status;
+            console.error('Groq API error:', status, errorData);
 
-        if (data.error) {
-            addMessage('Lo siento, hubo un problema al procesar tu solicitud. Intenta de nuevo en un momento.', 'bot');
+            if (status === 429) {
+                addMessage('## ⏳ Límite de solicitudes alcanzado\n\nEl servicio de IA ha alcanzado el límite temporal de consultas. Por favor, espera **1-2 minutos** e intenta de nuevo.\n\n---\n📌 Esto ocurre porque usamos un plan gratuito con límite de solicitudes por minuto.', 'bot');
+            } else if (status === 401 || status === 403) {
+                addMessage('## ⚠️ Error de autenticación\n\nHubo un problema con el servicio de IA. Nuestro equipo ha sido notificado.\n\n---\n📌 Intenta de nuevo más tarde.', 'bot');
+            } else if (status >= 500) {
+                addMessage('## 🔧 Servicio temporalmente no disponible\n\nEl servidor de IA está experimentando problemas. Esto suele resolverse en pocos minutos.\n\n---\n📌 Intenta tu consulta nuevamente en un momento.', 'bot');
+            } else {
+                addMessage(`## ⚠️ Error en el servicio\n\nNo pudimos procesar tu solicitud (código: **${status}**). Intenta de nuevo en un momento.\n\n---\n📌 Si el problema persiste, recarga la página.`, 'bot');
+            }
         } else {
-            const reply = data.choices[0].message.content;
-            addMessage(reply, 'bot');
+            const data = await response.json();
+
+            if (data.error) {
+                console.error('Groq response error:', data.error);
+                addMessage('## ⚠️ Error procesando la solicitud\n\nEl servicio de IA no pudo generar una respuesta. Intenta reformular tu pregunta o espera un momento.\n\n---\n📌 Si el error persiste, recarga la página.', 'bot');
+            } else {
+                const reply = data.choices[0].message.content;
+                addMessage(reply, 'bot');
+            }
         }
 
     } catch (error) {
         removeTyping(typingEl);
         console.error('Chat error:', error);
-        addMessage('Error de conexión. Verifica tu conexión a internet e intenta nuevamente.', 'bot');
+
+        if (!navigator.onLine) {
+            addMessage('## 📡 Sin conexión a internet\n\nParece que no tienes conexión a internet. Verifica tu conexión e intenta nuevamente.', 'bot');
+        } else {
+            addMessage('## ⚠️ Error de conexión\n\nNo se pudo conectar con el servicio de IA. Esto puede deberse a:\n\n- Conexión inestable\n- El servicio está temporalmente caído\n\nIntenta de nuevo en un momento.\n\n---\n📌 Si el problema persiste, recarga la página.', 'bot');
+        }
     }
 
     chatSend.disabled = false;
