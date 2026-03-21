@@ -121,16 +121,21 @@ body {
     gap: 1rem;
 }
 
-.logo-glyph {
-    font-size: 2.5rem;
-    color: var(--gold-inca);
-    filter: drop-shadow(0 0 10px rgba(212, 160, 23, 0.5));
-    animation: pulse-glow 3s ease-in-out infinite;
+.logo-img {
+    width: 48px;
+    height: 48px;
+    filter: drop-shadow(0 0 10px rgba(64, 224, 208, 0.4));
+    animation: logo-pulse 3s ease-in-out infinite;
+    transition: transform 0.3s ease;
 }
 
-@keyframes pulse-glow {
-    0%, 100% { filter: drop-shadow(0 0 10px rgba(212, 160, 23, 0.3)); }
-    50% { filter: drop-shadow(0 0 20px rgba(212, 160, 23, 0.7)); }
+.logo-img:hover {
+    transform: scale(1.1);
+}
+
+@keyframes logo-pulse {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(64, 224, 208, 0.3)); }
+    50% { filter: drop-shadow(0 0 18px rgba(64, 224, 208, 0.6)); }
 }
 
 .site-title {
@@ -1349,9 +1354,10 @@ body {
     margin-bottom: 1rem;
 }
 
-.footer-glyph {
-    font-size: 1.8rem;
-    filter: drop-shadow(0 0 8px rgba(212, 160, 23, 0.4));
+.footer-logo-img {
+    width: 36px;
+    height: 36px;
+    filter: drop-shadow(0 0 8px rgba(64, 224, 208, 0.4));
 }
 
 .footer-text {
