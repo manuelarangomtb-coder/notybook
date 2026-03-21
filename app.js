@@ -109,6 +109,7 @@ async function loadNews() {
                     El usuario se encuentra en: ${userLocale.country} (${userLocale.regionName}), zona horaria: ${userLocale.timezone}.
                     OBLIGATORIO: Todas las noticias DEBEN ser de la fecha ${today} o máximo del día anterior. NO uses noticias antiguas.
                     El campo "fecha" de cada noticia DEBE ser exactamente "${today}".
+                    FUENTE: El campo "fuente" SIEMPRE debe ser "Notybook IA". NUNCA cites medios de comunicación reales (CNN, Reuters, BBC, etc.) como fuente. Todo el contenido es una síntesis generada por IA para Notybook.
                     Contextualiza las noticias para la región del usuario cuando sea relevante.
                     Debes responder SOLO con un JSON válido, sin texto adicional.
                     Las noticias deben ser reales, verificables y actuales.
@@ -121,49 +122,49 @@ async function loadNews() {
                         "politica": {
                             "titulo": "título de noticia política progresista/izquierda de hoy ${today}, relevante para ${userLocale.regionName}",
                             "resumen": "resumen de 2-3 oraciones",
-                            "fuente": "nombre del medio",
+                            "fuente": "Notybook IA",
                             "fecha": "${today}",
                             "imagen_keywords": "2-3 palabras clave EN INGLÉS para buscar una imagen representativa (ej: congress democracy, protest rally, parliament vote). NO usar nombres de personas ni marcas."
                         },
                         "economia": {
                             "titulo": "título de noticia económica seria de hoy ${today}, con impacto en ${userLocale.country} o ${userLocale.regionName}",
                             "resumen": "resumen de 2-3 oraciones",
-                            "fuente": "nombre del medio económico serio",
+                            "fuente": "Notybook IA",
                             "fecha": "${today}",
                             "imagen_keywords": "2-3 palabras EN INGLÉS (ej: stock market, currency exchange, bank finance)"
                         },
                         "tecnologia": {
                             "titulo": "título sobre avances recientes en IA (Claude, ChatGPT, DeepSeek, Qwen, Gemini u otros modelos principales) de hoy ${today}",
                             "resumen": "resumen de 2-3 oraciones",
-                            "fuente": "nombre del medio tech",
+                            "fuente": "Notybook IA",
                             "fecha": "${today}",
                             "imagen_keywords": "2-3 palabras EN INGLÉS (ej: artificial intelligence, robot technology, neural network)"
                         },
                         "deportes": {
                             "titulo": "la noticia deportiva MÁS relevante de hoy ${today}. Priorizar: ciclismo UCI World Tour (carreras actuales, etapas, resultados), fútbol (ligas principales, Champions, selecciones de ${userLocale.regionName}), atletismo, natación, gimnasia, boxeo, lucha. Solo la más importante del momento.",
                             "resumen": "resumen de 2-3 oraciones con datos concretos (resultados, tiempos, clasificaciones)",
-                            "fuente": "nombre del medio deportivo",
+                            "fuente": "Notybook IA",
                             "fecha": "${today}",
                             "imagen_keywords": "2-3 palabras EN INGLÉS del deporte específico (ej: cycling race, soccer stadium, athletics sprint)"
                         },
                         "guerra1": {
                             "titulo": "noticia de hoy ${today} sobre conflicto Israel-Irán, impacto en Israel",
                             "resumen": "resumen de 2-3 oraciones sin contenido gráfico violento",
-                            "fuente": "nombre del medio",
+                            "fuente": "Notybook IA",
                             "fecha": "${today}",
                             "imagen_keywords": "2-3 palabras EN INGLÉS NO violentas (ej: diplomacy meeting, middle east map, peace negotiation). NUNCA usar: war, bomb, explosion, military attack, destruction."
                         },
                         "guerra2": {
                             "titulo": "segunda noticia de hoy ${today} sobre el conflicto, aspecto diplomático o humanitario",
                             "resumen": "resumen de 2-3 oraciones",
-                            "fuente": "nombre del medio",
+                            "fuente": "Notybook IA",
                             "fecha": "${today}",
                             "imagen_keywords": "2-3 palabras EN INGLÉS (ej: humanitarian aid, united nations, diplomacy)"
                         },
                         "guerra3": {
                             "titulo": "tercera noticia de hoy ${today}, consecuencias geopolíticas del conflicto",
                             "resumen": "resumen de 2-3 oraciones",
-                            "fuente": "nombre del medio",
+                            "fuente": "Notybook IA",
                             "fecha": "${today}",
                             "imagen_keywords": "2-3 palabras EN INGLÉS (ej: geopolitics globe, world leaders, international summit)"
                         }
@@ -277,49 +278,49 @@ function loadFallbackNews() {
         politica: {
             titulo: 'Movimientos sociales en América Latina impulsan reformas de inclusión',
             resumen: 'Diversos países latinoamericanos avanzan en legislaciones que promueven la equidad social y el acceso universal a servicios básicos, marcando una tendencia progresista en la región.',
-            fuente: 'Notybook',
+            fuente: 'Notybook IA',
             fecha: today,
             imagen_keywords: 'latin america congress democracy'
         },
         economia: {
             titulo: 'Bancos centrales evalúan el impacto de las criptomonedas en la economía global',
             resumen: 'Las principales economías del mundo analizan nuevas regulaciones para las monedas digitales mientras el Bitcoin muestra volatilidad en los mercados internacionales.',
-            fuente: 'Notybook',
+            fuente: 'Notybook IA',
             fecha: today,
             imagen_keywords: 'cryptocurrency bitcoin finance'
         },
         tecnologia: {
             titulo: 'Nuevos modelos de IA superan barreras en razonamiento y comprensión',
             resumen: 'Claude, ChatGPT y modelos chinos como DeepSeek continúan avanzando en capacidades de razonamiento, programación y análisis multimodal, redefiniendo los límites de la inteligencia artificial.',
-            fuente: 'Notybook',
+            fuente: 'Notybook IA',
             fecha: today,
             imagen_keywords: 'artificial intelligence robot neural'
         },
         deportes: {
             titulo: 'El World Tour de ciclismo enciende la temporada con etapas decisivas',
             resumen: 'Las principales carreras del calendario UCI World Tour mantienen la emoción con batallas en la montaña y sprints espectaculares. El pelotón internacional se prepara para las grandes clásicas de primavera.',
-            fuente: 'Notybook',
+            fuente: 'Notybook IA',
             fecha: today,
             imagen_keywords: 'cycling race peloton mountain'
         },
         guerra1: {
             titulo: 'Tensiones en Medio Oriente: impacto diplomático del conflicto Israel-Irán',
             resumen: 'La comunidad internacional intensifica esfuerzos diplomáticos para mediar en el conflicto, mientras Israel evalúa las consecuencias económicas y de seguridad de las recientes escaladas.',
-            fuente: 'Notybook',
+            fuente: 'Notybook IA',
             fecha: today,
             imagen_keywords: 'diplomacy middle east negotiation'
         },
         guerra2: {
             titulo: 'Organizaciones humanitarias alertan sobre crisis en la región',
             resumen: 'Las agencias de la ONU y organizaciones como la Cruz Roja reportan necesidades crecientes de ayuda humanitaria en las zonas afectadas por el conflicto.',
-            fuente: 'Notybook',
+            fuente: 'Notybook IA',
             fecha: today,
             imagen_keywords: 'humanitarian aid united nations'
         },
         guerra3: {
             titulo: 'El conflicto Israel-Irán reconfigura las alianzas geopolíticas globales',
             resumen: 'Las potencias mundiales ajustan sus posiciones estratégicas mientras el conflicto en Medio Oriente genera nuevas dinámicas en las relaciones internacionales.',
-            fuente: 'Notybook',
+            fuente: 'Notybook IA',
             fecha: today,
             imagen_keywords: 'world leaders international summit'
         }
@@ -1008,7 +1009,8 @@ chatForm.addEventListener('submit', async (e) => {
                     - Usa subsecciones con "###" cuando necesites separar temas.
                     - Usa **negritas** para nombres propios, cifras clave, fechas y datos importantes.
                     - Usa listas con "- " para enumerar datos, puntos clave o fuentes.
-                    - Al final, agrega una línea con "---" y luego "📌 **Fuentes:** " citando los medios consultados.
+                    - Al final, agrega una línea con "---" y luego "📌 **Fuentes:** Síntesis elaborada por Notybook IA a partir de reportes de prensa. Verifica en fuentes oficiales."
+                    - NUNCA cites medios de comunicación reales (CNN, Reuters, BBC, AP, EFE, etc.) como fuente directa. Todo el contenido es generado por IA. Usa frases como "según reportes de prensa", "de acuerdo con información pública", "según fuentes internacionales".
                     - Si mencionas tendencias, usa el formato: "🔥 **Tendencia en [plataforma]:** descripción"
                     - Mantén párrafos cortos (2-3 oraciones máximo).
                     - NO uses emojis en exceso, solo los indicados arriba de forma estratégica para dar estructura visual.
