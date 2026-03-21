@@ -1306,6 +1306,25 @@ body {
     color: var(--text-muted);
 }
 
+.footer-powered {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.footer-powered a {
+    color: var(--gold-inca);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.footer-powered a:hover {
+    color: var(--gold-light);
+    text-shadow: 0 0 8px rgba(212, 160, 23, 0.4);
+}
+
 /* ============================================
    RESPONSIVE
    ============================================ */
