@@ -123,49 +123,49 @@ async function loadNews() {
                             "resumen": "resumen de 2-3 oraciones",
                             "fuente": "nombre del medio",
                             "fecha": "${today}",
-                            "imagen_desc": "descripción breve para imagen"
+                            "imagen_keywords": "2-3 palabras clave EN INGLÉS para buscar una imagen representativa (ej: congress democracy, protest rally, parliament vote). NO usar nombres de personas ni marcas."
                         },
                         "economia": {
                             "titulo": "título de noticia económica seria de hoy ${today}, con impacto en ${userLocale.country} o ${userLocale.regionName}",
                             "resumen": "resumen de 2-3 oraciones",
                             "fuente": "nombre del medio económico serio",
                             "fecha": "${today}",
-                            "imagen_desc": "descripción breve"
+                            "imagen_keywords": "2-3 palabras EN INGLÉS (ej: stock market, currency exchange, bank finance)"
                         },
                         "tecnologia": {
                             "titulo": "título sobre avances recientes en IA (Claude, ChatGPT, DeepSeek, Qwen, Gemini u otros modelos principales) de hoy ${today}",
                             "resumen": "resumen de 2-3 oraciones",
                             "fuente": "nombre del medio tech",
                             "fecha": "${today}",
-                            "imagen_desc": "descripción breve"
+                            "imagen_keywords": "2-3 palabras EN INGLÉS (ej: artificial intelligence, robot technology, neural network)"
                         },
                         "deportes": {
                             "titulo": "la noticia deportiva MÁS relevante de hoy ${today}. Priorizar: ciclismo UCI World Tour (carreras actuales, etapas, resultados), fútbol (ligas principales, Champions, selecciones de ${userLocale.regionName}), atletismo, natación, gimnasia, boxeo, lucha. Solo la más importante del momento.",
                             "resumen": "resumen de 2-3 oraciones con datos concretos (resultados, tiempos, clasificaciones)",
                             "fuente": "nombre del medio deportivo",
                             "fecha": "${today}",
-                            "imagen_desc": "descripción breve"
+                            "imagen_keywords": "2-3 palabras EN INGLÉS del deporte específico (ej: cycling race, soccer stadium, athletics sprint)"
                         },
                         "guerra1": {
                             "titulo": "noticia de hoy ${today} sobre conflicto Israel-Irán, impacto en Israel",
                             "resumen": "resumen de 2-3 oraciones sin contenido gráfico violento",
                             "fuente": "nombre del medio",
                             "fecha": "${today}",
-                            "imagen_desc": "descripción breve"
+                            "imagen_keywords": "2-3 palabras EN INGLÉS NO violentas (ej: diplomacy meeting, middle east map, peace negotiation). NUNCA usar: war, bomb, explosion, military attack, destruction."
                         },
                         "guerra2": {
                             "titulo": "segunda noticia de hoy ${today} sobre el conflicto, aspecto diplomático o humanitario",
                             "resumen": "resumen de 2-3 oraciones",
                             "fuente": "nombre del medio",
                             "fecha": "${today}",
-                            "imagen_desc": "descripción breve"
+                            "imagen_keywords": "2-3 palabras EN INGLÉS (ej: humanitarian aid, united nations, diplomacy)"
                         },
                         "guerra3": {
                             "titulo": "tercera noticia de hoy ${today}, consecuencias geopolíticas del conflicto",
                             "resumen": "resumen de 2-3 oraciones",
                             "fuente": "nombre del medio",
                             "fecha": "${today}",
-                            "imagen_desc": "descripción breve"
+                            "imagen_keywords": "2-3 palabras EN INGLÉS (ej: geopolitics globe, world leaders, international summit)"
                         }
                     }
                     Solo responde con el JSON, nada más.`
@@ -202,7 +202,27 @@ async function loadNews() {
     }
 }
 
-function getPlaceholderImage(category) {
+// Build image URL from keywords using free image services
+function getNewsImageUrl(keywords, category) {
+    if (keywords && typeof keywords === 'string' && keywords.trim()) {
+        // Clean keywords: take only valid English words
+        const cleanKeywords = keywords
+            .replace(/[^a-zA-Z\s]/g, '')
+            .trim()
+            .split(/\s+/)
+            .slice(0, 3)
+            .join(',');
+
+        if (cleanKeywords) {
+            // Use loremflickr.com - free, no API key, CC-licensed images
+            return `https://loremflickr.com/600/400/${encodeURIComponent(cleanKeywords)}?random=${Date.now() + Math.random()}`;
+        }
+    }
+    // Fallback to category-based Unsplash images
+    return getFallbackImage(category);
+}
+
+function getFallbackImage(category) {
     const fallbacks = {
         politica: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=600&h=400&fit=crop',
         economia: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&h=400&fit=crop',
@@ -210,7 +230,6 @@ function getPlaceholderImage(category) {
         deportes: 'https://images.unsplash.com/photo-1461896836934-bd45ba8bcc44?w=600&h=400&fit=crop',
         guerra: 'https://images.unsplash.com/photo-1544427920-c49ccfb85579?w=600&h=400&fit=crop'
     };
-
     return fallbacks[category] || fallbacks.politica;
 }
 
@@ -224,14 +243,20 @@ function renderNewsCard(cardId, newsItem, category) {
     const sourceEl = card.querySelector('.card-source');
     const dateEl = card.querySelector('.card-date');
 
-    // Set image
+    // Set image from AI-generated keywords
     imgEl.classList.remove('skeleton-img');
     const img = document.createElement('img');
-    img.src = getPlaceholderImage(category);
+    img.src = getNewsImageUrl(newsItem.imagen_keywords, category);
     img.alt = newsItem.titulo;
     img.loading = 'lazy';
+    // If loremflickr fails, fallback to Unsplash category image
     img.onerror = function() {
-        this.src = `https://via.placeholder.com/600x400/1C2333/D4A017?text=${encodeURIComponent(category.toUpperCase())}`;
+        if (!this.dataset.retried) {
+            this.dataset.retried = 'true';
+            this.src = getFallbackImage(category);
+        } else {
+            this.src = `https://via.placeholder.com/600x400/1C2333/D4A017?text=${encodeURIComponent(category.toUpperCase())}`;
+        }
     };
     imgEl.appendChild(img);
 
@@ -253,43 +278,50 @@ function loadFallbackNews() {
             titulo: 'Movimientos sociales en América Latina impulsan reformas de inclusión',
             resumen: 'Diversos países latinoamericanos avanzan en legislaciones que promueven la equidad social y el acceso universal a servicios básicos, marcando una tendencia progresista en la región.',
             fuente: 'Notybook',
-            fecha: today
+            fecha: today,
+            imagen_keywords: 'latin america congress democracy'
         },
         economia: {
             titulo: 'Bancos centrales evalúan el impacto de las criptomonedas en la economía global',
             resumen: 'Las principales economías del mundo analizan nuevas regulaciones para las monedas digitales mientras el Bitcoin muestra volatilidad en los mercados internacionales.',
             fuente: 'Notybook',
-            fecha: today
+            fecha: today,
+            imagen_keywords: 'cryptocurrency bitcoin finance'
         },
         tecnologia: {
             titulo: 'Nuevos modelos de IA superan barreras en razonamiento y comprensión',
             resumen: 'Claude, ChatGPT y modelos chinos como DeepSeek continúan avanzando en capacidades de razonamiento, programación y análisis multimodal, redefiniendo los límites de la inteligencia artificial.',
             fuente: 'Notybook',
-            fecha: today
+            fecha: today,
+            imagen_keywords: 'artificial intelligence robot neural'
         },
         deportes: {
             titulo: 'El World Tour de ciclismo enciende la temporada con etapas decisivas',
             resumen: 'Las principales carreras del calendario UCI World Tour mantienen la emoción con batallas en la montaña y sprints espectaculares. El pelotón internacional se prepara para las grandes clásicas de primavera.',
             fuente: 'Notybook',
-            fecha: today
+            fecha: today,
+            imagen_keywords: 'cycling race peloton mountain'
         },
         guerra1: {
             titulo: 'Tensiones en Medio Oriente: impacto diplomático del conflicto Israel-Irán',
             resumen: 'La comunidad internacional intensifica esfuerzos diplomáticos para mediar en el conflicto, mientras Israel evalúa las consecuencias económicas y de seguridad de las recientes escaladas.',
             fuente: 'Notybook',
-            fecha: today
+            fecha: today,
+            imagen_keywords: 'diplomacy middle east negotiation'
         },
         guerra2: {
             titulo: 'Organizaciones humanitarias alertan sobre crisis en la región',
             resumen: 'Las agencias de la ONU y organizaciones como la Cruz Roja reportan necesidades crecientes de ayuda humanitaria en las zonas afectadas por el conflicto.',
             fuente: 'Notybook',
-            fecha: today
+            fecha: today,
+            imagen_keywords: 'humanitarian aid united nations'
         },
         guerra3: {
             titulo: 'El conflicto Israel-Irán reconfigura las alianzas geopolíticas globales',
             resumen: 'Las potencias mundiales ajustan sus posiciones estratégicas mientras el conflicto en Medio Oriente genera nuevas dinámicas en las relaciones internacionales.',
             fuente: 'Notybook',
-            fecha: today
+            fecha: today,
+            imagen_keywords: 'world leaders international summit'
         }
     };
 
