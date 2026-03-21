@@ -122,8 +122,8 @@ body {
 }
 
 .logo-img {
-    width: 48px;
-    height: 48px;
+    width: 72px;
+    height: 72px;
     filter: drop-shadow(0 0 10px rgba(64, 224, 208, 0.4));
     animation: logo-pulse 3s ease-in-out infinite;
     transition: transform 0.3s ease;
