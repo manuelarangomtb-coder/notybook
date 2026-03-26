@@ -26,7 +26,7 @@
                 <a href="#noticias">Noticias</a>
                 <a href="#guerra">Conflictos</a>
                 <a href="#mercados">Mercados</a>
-                <a href="#asistente">Asistente IA</a>
+                <a href="#" id="navAsistente">Asistente IA</a>
             </nav>
             <div class="header-date" id="headerDate"></div>
         </div>
@@ -49,29 +49,36 @@
         <div class="inca-sun"></div>
     </section>
 
-    <!-- AI Assistant Section -->
-    <section class="section section-assistant" id="asistente">
-        <div class="section-header">
-            <div class="glyph-decoration">&#10047;</div>
-            <h2 class="section-title">Asistente de Noticias IA</h2>
-            <div class="glyph-decoration">&#10047;</div>
-        </div>
-        <p class="section-desc">Escribe qu&eacute; noticias quieres conocer y nuestra IA te las buscar&aacute;.</p>
-        <div class="chat-container">
-            <div class="chat-messages" id="chatMessages">
-                <div class="chat-msg bot-msg">
-                    <div class="msg-avatar">&#9788;</div>
-                    <div class="msg-bubble">&iexcl;Hola! Soy el asistente de <strong>Notybook</strong>. Preg&uacute;ntame lo que quieras saber: noticias de hoy, qu&eacute; est&aacute; pasando en cualquier lugar del mundo, tendencias en redes sociales, deportes, pol&iacute;tica, econom&iacute;a, tecnolog&iacute;a... Te informo con hechos, sin opiniones. &iquest;Qu&eacute; quieres saber?</div>
+    <!-- Floating Chat Widget -->
+    <button class="chat-fab" id="chatFab" aria-label="Abrir asistente IA">
+        <span class="chat-fab-icon">&#9788;</span>
+        <span class="chat-fab-close">&times;</span>
+    </button>
+
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-widget-header">
+            <div class="chat-widget-title">
+                <span class="chat-widget-avatar">&#9788;</span>
+                <div>
+                    <strong>Notybook IA</strong>
+                    <small>Asistente de Noticias</small>
                 </div>
             </div>
-            <form class="chat-input-area" id="chatForm">
-                <input type="text" id="chatInput" class="chat-input" placeholder="Escribe qu&eacute; noticias quieres ver..." autocomplete="off">
-                <button type="submit" class="chat-send" id="chatSend">
-                    <span>&#10148;</span>
-                </button>
-            </form>
+            <button class="chat-widget-close" id="chatWidgetClose" aria-label="Cerrar chat">&times;</button>
         </div>
-    </section>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-msg bot-msg">
+                <div class="msg-avatar">&#9788;</div>
+                <div class="msg-bubble">&iexcl;Hola! Soy el asistente de <strong>Notybook</strong>. Preg&uacute;ntame lo que quieras saber: noticias de hoy, qu&eacute; est&aacute; pasando en cualquier lugar del mundo, tendencias en redes sociales, deportes, pol&iacute;tica, econom&iacute;a, tecnolog&iacute;a... Te informo con hechos, sin opiniones. &iquest;Qu&eacute; quieres saber?</div>
+            </div>
+        </div>
+        <form class="chat-input-area" id="chatForm">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Escribe tu pregunta..." autocomplete="off">
+            <button type="submit" class="chat-send" id="chatSend">
+                <span>&#10148;</span>
+            </button>
+        </form>
+    </div>
 
     <!-- Main News Section -->
     <section class="section" id="noticias">

@@ -918,6 +918,55 @@ function loadFallbackMarkets() {
     renderTicker(fallbackData);
 }
 
+// ---- CHAT WIDGET TOGGLE ----
+const chatFab = document.getElementById('chatFab');
+const chatWidget = document.getElementById('chatWidget');
+const chatWidgetClose = document.getElementById('chatWidgetClose');
+const navAsistente = document.getElementById('navAsistente');
+
+function toggleChat() {
+    const isOpen = chatWidget.classList.toggle('open');
+    chatFab.classList.toggle('active', isOpen);
+    if (isOpen) {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        setTimeout(() => chatInput.focus(), 300);
+    }
+}
+
+function closeChat() {
+    chatWidget.classList.remove('open');
+    chatFab.classList.remove('active');
+}
+
+chatFab.addEventListener('click', toggleChat);
+chatWidgetClose.addEventListener('click', closeChat);
+
+if (navAsistente) {
+    navAsistente.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (!chatWidget.classList.contains('open')) {
+            toggleChat();
+        }
+    });
+}
+
+// Handle mobile keyboard - keep input visible
+if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', () => {
+        if (chatWidget.classList.contains('open')) {
+            const vvHeight = window.visualViewport.height;
+            chatWidget.style.height = vvHeight + 'px';
+            chatWidget.style.maxHeight = vvHeight + 'px';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    });
+    window.visualViewport.addEventListener('scroll', () => {
+        if (chatWidget.classList.contains('open')) {
+            chatWidget.style.bottom = window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop + 'px';
+        }
+    });
+}
+
 // ---- CHAT / AI ASSISTANT ----
 const chatForm = document.getElementById('chatForm');
 const chatInput = document.getElementById('chatInput');
