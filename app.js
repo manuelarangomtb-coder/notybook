@@ -4,7 +4,7 @@
 
 // ---- CONFIG ----
 // MVP - Free tier API key (exposed intentionally for public deployment)
-const GROQ_API_KEY = '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';
+const GROQ_API_KEY = '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';
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
 // ---- CONTENT MODERATION ----
